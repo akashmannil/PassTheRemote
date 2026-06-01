@@ -1,0 +1,13 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
+onlyBuiltDependencies:
+  - esbuild
+  - unrs-resolver
+  - "@parcel/watcher"
+  - better-sqlite3
+  - bufferutil
+  - utf-8-validate

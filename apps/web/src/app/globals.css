@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ptr-bg: #0d1117;
+  --ptr-surface: #161b22;
+  --ptr-border: #30363d;
+  --ptr-text: #e6edf3;
+  --ptr-muted: #7d8590;
+  --ptr-accent: #2f81f7;
+  --ptr-success: #3fb950;
+  --ptr-danger: #f85149;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--ptr-bg);
+  color: var(--ptr-text);
+  font-family: var(--font-inter), sans-serif;
+}
