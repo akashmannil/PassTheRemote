@@ -10,6 +10,9 @@ importers:
 
   apps/server:
     dependencies:
+      '@ptr/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@supabase/supabase-js':
         specifier: ^2.49.8
         version: 2.106.2

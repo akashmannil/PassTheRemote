@@ -3,6 +3,7 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import { registerChannelHandlers } from "./handlers/channel";
 
 const app = express();
 const httpServer = createServer(app);
@@ -23,6 +24,7 @@ app.get("/health", (_req, res) => {
 
 io.on("connection", (socket) => {
   console.log(`Socket connected: ${socket.id}`);
+  registerChannelHandlers(io, socket);
 
   socket.on("disconnect", () => {
     console.log(`Socket disconnected: ${socket.id}`);

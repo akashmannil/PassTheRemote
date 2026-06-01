@@ -46,7 +46,10 @@ RLS policies: enabled on all tables; members can read servers they belong to; us
 
 | Event | Direction | Status | Notes |
 |-------|-----------|--------|-------|
-| (none yet) | — | — | — |
+| channel:join | client→server | ✅ implemented | payload: ChannelJoinPayload + serverId |
+| channel:leave | client→server | ✅ implemented | payload: { channelId, userId, serverId } |
+| channel:members | server→room | ✅ implemented | payload: ChannelMembersPayload |
+| server:presence | server→server-room | ✅ implemented | payload: ServerPresencePayload |
 
 ---
 
