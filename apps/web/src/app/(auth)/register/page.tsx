@@ -7,6 +7,10 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getSupabaseClient } from "@/lib/supabase";
+import {
+  GoogleOAuthButton,
+  OAuthDivider,
+} from "@/components/auth/GoogleOAuthButton";
 
 interface FormErrors {
   username?: string;
@@ -105,6 +109,9 @@ export default function RegisterPage() {
         <h1 className="mb-6 text-center text-lg font-semibold text-ptr-text">
           Create an account
         </h1>
+
+        <GoogleOAuthButton />
+        <OAuthDivider />
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Username */}

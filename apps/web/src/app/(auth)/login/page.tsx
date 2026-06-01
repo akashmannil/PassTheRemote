@@ -7,6 +7,10 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getSupabaseClient } from "@/lib/supabase";
+import {
+  GoogleOAuthButton,
+  OAuthDivider,
+} from "@/components/auth/GoogleOAuthButton";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -58,6 +62,9 @@ export default function LoginPage() {
         <h1 className="mb-6 text-center text-lg font-semibold text-ptr-text">
           Sign in to your account
         </h1>
+
+        <GoogleOAuthButton />
+        <OAuthDivider />
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
