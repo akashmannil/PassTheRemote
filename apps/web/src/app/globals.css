@@ -2,23 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --ptr-bg: #0d1117;
-  --ptr-surface: #161b22;
-  --ptr-border: #30363d;
-  --ptr-text: #e6edf3;
-  --ptr-muted: #7d8590;
-  --ptr-accent: #2f81f7;
-  --ptr-success: #3fb950;
-  --ptr-danger: #f85149;
+@layer base {
+  :root {
+    /* PTR design tokens */
+    --ptr-bg: #0d1117;
+    --ptr-surface: #161b22;
+    --ptr-border: #30363d;
+    --ptr-text: #e6edf3;
+    --ptr-muted: #7d8590;
+    --ptr-accent: #2f81f7;
+    --ptr-success: #3fb950;
+    --ptr-danger: #f85149;
+
+    /* shadcn/ui semantic variables (mapped to PTR palette) */
+    --background: var(--ptr-bg);
+    --foreground: var(--ptr-text);
+    --card: var(--ptr-surface);
+    --card-foreground: var(--ptr-text);
+    --popover: var(--ptr-surface);
+    --popover-foreground: var(--ptr-text);
+    --primary: var(--ptr-accent);
+    --primary-foreground: var(--ptr-text);
+    --secondary: var(--ptr-surface);
+    --secondary-foreground: var(--ptr-muted);
+    --muted: var(--ptr-surface);
+    --muted-foreground: var(--ptr-muted);
+    --accent: var(--ptr-accent);
+    --accent-foreground: var(--ptr-text);
+    --destructive: var(--ptr-danger);
+    --destructive-foreground: var(--ptr-text);
+    --border: var(--ptr-border);
+    --input: var(--ptr-border);
+    --ring: var(--ptr-accent);
+    --radius: 6px;
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
 
-body {
-  background-color: var(--ptr-bg);
-  color: var(--ptr-text);
-  font-family: var(--font-inter), sans-serif;
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter), sans-serif;
+  }
 }
