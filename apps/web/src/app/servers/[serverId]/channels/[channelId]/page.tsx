@@ -1,13 +1,14 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { redirect, notFound } from "next/navigation";
-import type { Channel } from "@ptr/types";
+import { TextChannel } from "@/components/channel/TextChannel";
+import type { Channel, User } from "@ptr/types";
 
 interface PageProps {
   params: Promise<{ serverId: string; channelId: string }>;
 }
 
-async function getChannel(channelId: string): Promise<Channel | null> {
+async function getPageData(channelId: string, serverId: string) {
   const cookieStore = await cookies();
 
   const supabase = createServerClient(
@@ -22,31 +23,34 @@ async function getChannel(channelId: string): Promise<Channel | null> {
   );
 
   const {
-    data: { user },
+    data: { user: authUser },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (!authUser) redirect("/login");
 
-  const { data } = await supabase
-    .from("channels")
-    .select("*")
-    .eq("id", channelId)
-    .single();
+  const [{ data: channelData }, { data: userData }] = await Promise.all([
+    supabase.from("channels").select("*").eq("id", channelId).single(),
+    supabase.from("users").select("*").eq("id", authUser.id).single(),
+  ]);
 
-  return data as Channel | null;
+  if (!channelData) notFound();
+  if (channelData.server_id !== serverId) notFound();
+
+  return {
+    channel: channelData as Channel,
+    user: userData as User | null,
+  };
 }
 
 export default async function ChannelPage({ params }: PageProps) {
-  const { channelId } = await params;
-  const channel = await getChannel(channelId);
+  const { serverId, channelId } = await params;
+  const { channel, user } = await getPageData(channelId, serverId);
 
-  if (!channel) notFound();
+  const clientUser = user
+    ? { id: user.id, username: user.username, avatarUrl: user.avatar_url }
+    : null;
 
   return (
-    <div className="flex h-full items-center justify-center">
-      <p className="text-ptr-muted text-sm">
-        # {channel.name} — chat coming in Commit 10
-      </p>
-    </div>
+    <TextChannel channel={channel} serverId={serverId} user={clientUser} />
   );
 }
