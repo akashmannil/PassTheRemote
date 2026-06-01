@@ -9,14 +9,18 @@
 
 | Table | Status | Notes |
 |-------|--------|-------|
-| users | ⬜ pending | id, username, avatar_url, created_at |
-| servers | ⬜ pending | id, name, icon_url, owner_id, created_at |
-| server_members | ⬜ pending | server_id, user_id, role, joined_at |
-| channels | ⬜ pending | id, server_id, name, type, position, created_at |
-| channel_presence | ⬜ pending | channel_id, user_id, joined_at |
-| messages | ⬜ pending | id, channel_id, user_id, content, created_at |
-| invites | ⬜ pending | id, server_id, created_by, code, expires_at, max_uses, uses |
-| channel_sessions | ⬜ pending | id, channel_id, host_id, media_url, media_type, is_playing, current_position, updated_at |
+| users | ✅ created | id, username, avatar_url, created_at |
+| servers | ✅ created | id, name, icon_url, owner_id, created_at |
+| server_members | ✅ created | server_id, user_id, role(owner/admin/member), joined_at |
+| channels | ✅ created | id, server_id, name, type(text/watch/voice/music), position, created_at |
+| channel_presence | ✅ created | channel_id, user_id, joined_at |
+| messages | ✅ created | id, channel_id, user_id, content, created_at |
+| invites | ✅ created | id, server_id, created_by, code(UNIQUE), expires_at, max_uses, uses |
+| channel_sessions | ✅ created | id, channel_id(UNIQUE), host_id, media_url, media_type, is_playing, current_position, updated_at |
+
+Migration file: `supabase/migrations/001_initial_schema.sql`
+
+RLS policies: enabled on all tables; members can read servers they belong to; users can only insert/update own rows.
 
 ---
 
@@ -25,6 +29,8 @@
 | Component | File | Status | Notes |
 |-----------|------|--------|-------|
 | RootLayout | apps/web/src/app/layout.tsx | ✅ created | Inter font, globals |
+| Button | apps/web/src/components/ui/button.tsx | ✅ created | shadcn/ui, PTR accent |
+| Input | apps/web/src/components/ui/input.tsx | ✅ created | shadcn/ui, PTR border |
 
 ---
 
@@ -49,3 +55,5 @@
 | Commit | Description |
 |--------|-------------|
 | Commit 1 | Init pnpm monorepo — apps/web, apps/server, packages/types |
+| Commit 2 | TypeScript strict, path aliases, Tailwind PTR tokens, shadcn/ui |
+| Commit 3 | Supabase migration 001 — all Phase 1 tables + RLS + indexes; shared TS types |
